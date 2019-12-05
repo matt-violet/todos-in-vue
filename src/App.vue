@@ -2,14 +2,14 @@
   <div id="app">
     <h1>{{ formTitle }}</h1>
     <br>
-    Add todo:
-    <input v-model="newTodo" placeholder='Enter a task'/>
+    Add a task:
+    <input v-model="newTodo" id='input' placeholder='new task'/>
     <br>
     <button v-on:click='onSubmit(newTodo)'>Submit</button>
     <br>
     <ol>
       <li v-for='todo in todos' :key='todo.id' class='todos'>
-      {{ todo.title }}
+      {{ todo }} <button v-on:click='onDelete(todo)'>delete</button>
       </li>
     </ol>
   </div>
@@ -20,19 +20,18 @@ export default {
   name: 'app',
   data () {
     return {
-      formTitle: 'Form: ',
+      formTitle: 'To-Do List: ',
       newTodo: '',
       todos: [],
-      todoCount: 0
     }
   },
   methods: {
     onSubmit: function (newTodo) {
-      this.todoCount++;
-      this.todos.push({
-        title: this.newTodo,
-        id: this.todoCount
-      });
+      this.todos.push(this.newTodo);
+      this.newTodo = '';
+    },
+    onDelete: function (todo) {
+      this.todos.splice(this.todos.indexOf(todo), 1);
     }
   }
 }
